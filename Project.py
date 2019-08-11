@@ -1,5 +1,7 @@
 from tkinter import *
+from tkinter import filedialog
 from tkinter.ttk import *
+from PIL import Image, ImageTk
 import mysql.connector
 from tkinter import messagebox
 conn=mysql.connector.connect(host="localhost",user="Rahul",passwd="pithen",auth_plugin="mysql_native_password",database="NewDatabase")
@@ -10,29 +12,41 @@ root.title("Project")
 bgimg=PhotoImage(file=r"images/kid.png")
 mainmenu = Menu(root)
 
-#for file menu
+#for Student menu
 m1 = Menu(mainmenu,tearoff=0)
-m1.add_command(label="New",command=quit)
-m1.add_command(label="Open",command=quit)
-m1.add_separator()
-m1.add_command(label="Save",command=quit)
-m1.add_command(label="Save As",command=quit)
-m1.add_command(label="Print",command=quit)
-m1.add_command(label="Exit",command=root.destroy)
+m1.add_command(label="Add Record",command=quit)
+m1.add_command(label="Search/Edit",command=quit)
+m1.add_command(label="Delete Record",command=quit)
 root.config(menu=mainmenu)
-mainmenu.add_cascade(label="File",menu=m1)
+mainmenu.add_cascade(label="Student",menu=m1)
 
-#for edit menu
+#for Teacher menu
 m2 = Menu(mainmenu,tearoff=0)
-m2.add_command(label="cut",command=quit)
-m2.add_command(label="Copy",command=quit)
-m2.add_separator()
-m2.add_command(label="Paste",command=quit)
-m2.add_command(label="Find",command=quit)
-m2.add_command(label="Print",command=quit)
-m2.add_command(label="Exit",command=root.destroy)
+m2.add_command(label="Add Record",command=quit)
+m2.add_command(label="Search/Edit",command=quit)
+m2.add_command(label="Delete Record",command=quit)
 root.config(menu=mainmenu)
-mainmenu.add_cascade(label="Edit",menu=m2)
+mainmenu.add_cascade(label="Teacher",menu=m2)
+
+#Staff Menu
+m3 = Menu(mainmenu,tearoff=0)
+m3.add_command(label="Add Record",command=quit)
+m3.add_command(label="Search/Edit",command=quit)
+m3.add_command(label="Delete Record",command=quit)
+root.config(menu=mainmenu)
+mainmenu.add_cascade(label="Staff",menu=m3)
+
+#Book Category
+m4 = Menu(mainmenu,tearoff=0)
+m4.add_command(label="Add Category",command=quit)
+m4.add_command(label="Add Book Details",command=quit)
+m4.add_command(label="Add Books",command=quit)
+m4.add_command(label="Edit Book",command=quit)
+m4.add_command(label="Delete Book",command=quit)
+m4.add_command(label="Issue Book",command=quit)
+root.config(menu=mainmenu)
+mainmenu.add_cascade(label="Books",menu=m4)
+
 
 #frame
 frame=Frame(root,borderwidth=0,relief=SUNKEN)
@@ -53,8 +67,8 @@ exi=PhotoImage(file=r"images/exit.png").subsample(5,5)
 
 #defition of functions
 def AddStudent():
-    studentWindow=Tk()
-    studentWindow.geometry("500x500")
+    studentWindow=Toplevel()
+    studentWindow.geometry("800x800")
     studentWindow.title("Add Record")
 
     #Stringvar
@@ -64,19 +78,58 @@ def AddStudent():
     s4=StringVar(studentWindow)
     s5=StringVar(studentWindow)
     s6=StringVar(studentWindow)
+    s7=StringVar(studentWindow)
+    s8=StringVar(studentWindow)
+    s9=StringVar(studentWindow)
+    s10=StringVar(studentWindow)
+    s11=StringVar(studentWindow)
+    s12=StringVar(studentWindow)
+    s13=StringVar(studentWindow)
+    s14=StringVar(studentWindow)
+    s15=StringVar(studentWindow)
+
 
     #frames
-    f1=Frame(studentWindow)
-    f1.pack(side=LEFT,anchor="nw",padx="10",pady="10")
+    f1=Frame(studentWindow,borderwidth=2,relief=SUNKEN)
+    f1.pack(side=TOP,anchor="nw",padx="20",pady="20")
+    f4=Frame(studentWindow,borderwidth=2,relief=SUNKEN)
+    f4.pack(side=TOP,anchor="se",padx="10",pady="10")
+    f2=Frame(studentWindow,borderwidth=2,relief=SUNKEN)
+    f2.pack(side=BOTTOM,anchor="sw",padx="10",pady="10",fill="x")
+    f3=Frame(studentWindow,borderwidth=2,relief=SUNKEN)
+    f3.pack(side=BOTTOM,anchor="se",padx="10",pady="10")
 
     #label
-    l1=Label(f1,text="Name:").grid(row=0,column=0,padx=10,pady=10)
-    l2=Label(f1,text="Class:").grid(row=1,column=0,padx=10,pady=10)
-    l3=Label(f1,text="Section").grid(row=2,column=0,padx=10,pady=10)
-    l4=Label(f1,text="Gender").grid(row=3,column=0,padx=10,pady=10)
-    l5=Label(f1,text="Birth Date").grid(row=4,column=0,padx=10,pady=10)
-    l5=Label(f1,text="Admission Date").grid(row=5,column=0,padx=10,pady=10)
+    Label(f1,text="Name:").grid(row=0,column=0,padx=10,pady=10)
+    Label(f1,text="Class:").grid(row=1,column=0,padx=10,pady=10)
+    Label(f1,text="Section").grid(row=2,column=0,padx=10,pady=10)
+    Label(f1,text="Gender").grid(row=3,column=0,padx=10,pady=10)
+    Label(f1,text="Birth Date").grid(row=4,column=0,padx=10,pady=10)
+    Label(f1,text="Admission Date").grid(row=5,column=0,padx=10,pady=10)
 
+    Label(f2,text="Parents Information").grid(row=0,column=0)
+    Label(f2,text="Mother").grid(row=1,column=0,padx=10,pady=10)
+    Label(f2,text="Contact").grid(row=2,column=0,padx=10,pady=10)
+    Label(f2,text="Father").grid(row=3,column=0,padx=10,pady=10)
+    Label(f2,text="Contact").grid(row=4,column=0,padx=10,pady=10)
+    Label(f2,text="Email").grid(row=5,column=0,padx=10,pady=10)
+
+    Label(f3,text="Address").grid(row=0,column=0,padx=10,pady=10)
+    Label(f3,text="Street").grid(row=1,column=0,padx=10,pady=10)
+    Label(f3,text="City").grid(row=2,column=0,padx=10,pady=10)
+    Label(f3,text="State").grid(row=3,column=0,padx=10,pady=10)
+    Label(f3,text="Pincode").grid(row=4,column=0,padx=10,pady=10)
+
+    def AddImg():
+        path = filedialog.askopenfilename(initialdir = "/root",title = "Select file",filetypes = (("jpeg files","*.jpg"),("all files","*.*")))
+        fpath = Image.open(path)
+        fpath=ImageTk.PhotoImage(fpath)
+        lab=Label(f4,image=fpath)
+        lab.image=fpath
+        lab.grid(row=0,column=0,sticky="ew")
+    #image of student
+    Button(f4,text="Add Image",command=AddImg).grid(row=1,column=1,sticky="ew")
+    # Label(f1,text="Note : Date format is yyyy-mm-dd").grid(row=8,column=0,pady=10,padx=10)=10)
     #Combobox
     choices=['1','2','3','4','5','6','7','8','9','11','12']
     choices2=['Male','Female']
@@ -86,10 +139,21 @@ def AddStudent():
 
 
     #entry
-    e1=Entry(f1,width=20,textvariable=s1).grid(row=0,column=1)
-    e2=Entry(f1,width=20,textvariable=s3).grid(row=2,column=1)
-    e3=Entry(f1,width=20,textvariable=s5).grid(row=4,column=1)
-    e4=Entry(f1,width=20,textvariable=s6).grid(row=5,column=1)
+    Entry(f1,width=20,textvariable=s1).grid(row=0,column=1)
+    Entry(f1,width=20,textvariable=s3).grid(row=2,column=1)
+    Entry(f1,width=20,textvariable=s5).grid(row=4,column=1)
+    Entry(f1,width=20,textvariable=s6).grid(row=5,column=1)
+
+    Entry(f2,width=20,textvariable=s7).grid(row=1,column=1)
+    Entry(f2,width=20,textvariable=s8).grid(row=2,column=1)
+    Entry(f2,width=20,textvariable=s9).grid(row=3,column=1)
+    Entry(f2,width=20,textvariable=s10).grid(row=4,column=1)
+    Entry(f2,width=20,textvariable=s11).grid(row=5,column=1)
+
+    Entry(f3,width=20,textvariable=s12).grid(row=1,column=1)
+    Entry(f3,width=20,textvariable=s13).grid(row=2,column=1)
+    Entry(f3,width=20,textvariable=s14).grid(row=3,column=1)
+    Entry(f3,width=20,textvariable=s15).grid(row=4,column=1)
 
 
     #userinstruction
@@ -114,11 +178,11 @@ def AddStudent():
         clr()
     b1=Button(f1,text="Submit",command=save).grid(row=6,column=0,padx=10,pady=10)
     b2=Button(f1,text="Clear",command=clr).grid(row=6,column=7,padx=10,pady=10)
-    Label(f1,text="Note : Date format is yyyy-mm-dd").grid(row=8,column=0,pady=10,padx=10)
+    # Label(f1,text="Note : Date format is yyyy-mm-dd").grid(row=8,column=0,pady=10,padx=10)
 #defition of Teacher
 def Teacher():
     TeacherWin=Tk()
-    TeacherWin.geometry("800x600")
+    TeacherWin.geometry("800x800")
     TeacherWin.title("Add Record")
 
     #frames
@@ -179,7 +243,16 @@ def Teacher():
         clr()
     Button(ft,text="Submit",command=save).grid(row=8,column=0,padx=10,pady=10)
     Button(ft,text="Clear",command=clr).grid(row=8,column=7,padx=10,pady=10)
-    Label(ft,text="Note : Date format is yyyy-mm-dd").grid(row=10,column=0,padx=10,pady=10)
+
+    def staff():
+        Staffwin=Tk()
+        Staffwin.geometry("700x700")
+        Staffwin.title("Add Record")
+
+        #frames
+        f1=Frame(Staffwin)
+        f1.pack(side=LEFT,ANCHOR="nw",padx=10,pady=10)
+        print("Hello bois")
 
 #label for image
 l1=Label(frame1,image=bgimg).pack(side=BOTTOM,anchor="sw")
