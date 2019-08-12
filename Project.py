@@ -1,9 +1,15 @@
 from tkinter import *
+from datetime import datetime
 from tkinter import filedialog
 from tkinter.ttk import *
 from PIL import Image, ImageTk
 import mysql.connector
 from tkinter import messagebox
+now=datetime.now()
+year=now.year
+year=year%100
+Eid=year*10000
+path=""
 conn=mysql.connector.connect(host="localhost",user="Rahul",passwd="pithen",auth_plugin="mysql_native_password",database="NewDatabase")
 var=conn.cursor()
 root = Tk()
@@ -13,6 +19,7 @@ bgimg=PhotoImage(file=r"images/kid.png")
 mainmenu = Menu(root)
 
 #for Student menu
+
 m1 = Menu(mainmenu,tearoff=0)
 m1.add_command(label="Add Record",command=quit)
 m1.add_command(label="Search/Edit",command=quit)
@@ -90,75 +97,81 @@ def AddStudent():
 
 
     #frames
-    f1=Frame(studentWindow,borderwidth=2,relief=SUNKEN)
-    f1.pack(side=TOP,anchor="nw",padx="20",pady="20")
-    f4=Frame(studentWindow,borderwidth=2,relief=SUNKEN)
-    f4.pack(side=TOP,anchor="se",padx="10",pady="10")
-    f2=Frame(studentWindow,borderwidth=2,relief=SUNKEN)
-    f2.pack(side=BOTTOM,anchor="sw",padx="10",pady="10",fill="x")
-    f3=Frame(studentWindow,borderwidth=2,relief=SUNKEN)
-    f3.pack(side=BOTTOM,anchor="se",padx="10",pady="10")
+    Label(studentWindow,text="Student").grid(row=0,column=0)
+    f1=Frame(studentWindow,borderwidth=1,relief=SUNKEN)
+    f1.grid(row=0,column=0,sticky="ew",padx="20",pady="40")
+    f2=Frame(studentWindow,borderwidth=1,relief=SUNKEN)
+    f2.grid(row=1,column=0,sticky="ew",padx="20",pady="20")
+    f3=Frame(studentWindow,borderwidth=1,relief=SUNKEN)
+    f3.grid(row=0,column=1,sticky="ew",padx="20",pady="20")
+    f4=Frame(studentWindow,borderwidth=1,relief=SUNKEN)
+    f4.grid(row=1,column=1,sticky="ew",padx="20",pady="20")
 
     #label
-    Label(f1,text="Name:").grid(row=0,column=0,padx=10,pady=10)
-    Label(f1,text="Class:").grid(row=1,column=0,padx=10,pady=10)
-    Label(f1,text="Section").grid(row=2,column=0,padx=10,pady=10)
-    Label(f1,text="Gender").grid(row=3,column=0,padx=10,pady=10)
-    Label(f1,text="Birth Date").grid(row=4,column=0,padx=10,pady=10)
-    Label(f1,text="Admission Date").grid(row=5,column=0,padx=10,pady=10)
+    Label(f1,text="Student Information").grid(row=0,column=0)
+    Label(f1,text="Name:").grid(row=1,column=0,padx="10",pady="10",sticky="ew")
+    Label(f1,text="Class:").grid(row=2,column=0,padx=10,pady=10,sticky="ew")
+    Label(f1,text="Section").grid(row=3,column=0,padx=10,pady=10,sticky="ew")
+    Label(f1,text="Gender").grid(row=4,column=0,padx=10,pady=10,sticky="ew")
+    Label(f1,text="Birth Date").grid(row=5,column=0,padx=10,pady=10,sticky="ew")
+    Label(f1,text="Admission Date").grid(row=6,column=0,padx=10,pady=10,sticky="ew")
 
     Label(f2,text="Parents Information").grid(row=0,column=0)
-    Label(f2,text="Mother").grid(row=1,column=0,padx=10,pady=10)
-    Label(f2,text="Contact").grid(row=2,column=0,padx=10,pady=10)
-    Label(f2,text="Father").grid(row=3,column=0,padx=10,pady=10)
-    Label(f2,text="Contact").grid(row=4,column=0,padx=10,pady=10)
-    Label(f2,text="Email").grid(row=5,column=0,padx=10,pady=10)
+    Label(f2,text="Mother").grid(row=1,column=0,padx=10,pady=10,sticky="ew")
+    Label(f2,text="Contact").grid(row=2,column=0,padx=10,pady=10,sticky="ew")
+    Label(f2,text="Father").grid(row=3,column=0,padx=10,pady=10,sticky="ew")
+    Label(f2,text="Contact").grid(row=4,column=0,padx=10,pady=10,sticky="ew")
+    Label(f2,text="Email").grid(row=5,column=0,padx=10,pady=10,sticky="ew")
 
-    Label(f3,text="Address").grid(row=0,column=0,padx=10,pady=10)
-    Label(f3,text="Street").grid(row=1,column=0,padx=10,pady=10)
-    Label(f3,text="City").grid(row=2,column=0,padx=10,pady=10)
-    Label(f3,text="State").grid(row=3,column=0,padx=10,pady=10)
-    Label(f3,text="Pincode").grid(row=4,column=0,padx=10,pady=10)
+    Label(f3,text="Address").grid(row=0,column=0,padx=10,pady=10,sticky="ew")
+    Label(f3,text="Street").grid(row=1,column=0,padx=10,pady=10,sticky="ew")
+    Label(f3,text="City").grid(row=2,column=0,padx=10,pady=10,sticky="ew")
+    Label(f3,text="State").grid(row=3,column=0,padx=10,pady=10,sticky="ew")
+    Label(f3,text="Pincode").grid(row=4,column=0,padx=10,pady=10,sticky="ew")
 
     def AddImg():
+        global path
         path = filedialog.askopenfilename(initialdir = "/root",title = "Select file",filetypes = (("jpeg files","*.jpg"),("all files","*.*")))
+        print(path)
         fpath = Image.open(path)
         fpath=ImageTk.PhotoImage(fpath)
         lab=Label(f4,image=fpath)
         lab.image=fpath
         lab.grid(row=0,column=0,sticky="ew")
+
+
     #image of student
-    Button(f4,text="Add Image",command=AddImg).grid(row=1,column=1,sticky="ew")
+    Button(f4,text="Add Image",command=AddImg).grid(row=1,column=0,sticky="ew")
     # Label(f1,text="Note : Date format is yyyy-mm-dd").grid(row=8,column=0,pady=10,padx=10)=10)
     #Combobox
     choices=['1','2','3','4','5','6','7','8','9','11','12']
     choices2=['Male','Female']
-    op1=Combobox(f1,values=choices,width="18",textvariable=s2)
-    op1.grid(row=1,column=1,padx=10,pady=10)
-    op2=Combobox(f1,values=choices2,width="18",textvariable=s4).grid(row=3,column=1,padx=10,pady=10)
+    op1=Combobox(f1,values=choices,width="20",textvariable=s2)
+    op1.grid(row=2,column=1,padx=10,pady=10)
+    op2=Combobox(f1,values=choices2,width="20",textvariable=s4).grid(row=4,column=1,padx=10,pady=10)
 
 
     #entry
-    Entry(f1,width=20,textvariable=s1).grid(row=0,column=1)
-    Entry(f1,width=20,textvariable=s3).grid(row=2,column=1)
-    Entry(f1,width=20,textvariable=s5).grid(row=4,column=1)
-    Entry(f1,width=20,textvariable=s6).grid(row=5,column=1)
+    Entry(f1,width=20,textvariable=s1).grid(row=1,column=1,sticky="ew")
+    Entry(f1,width=20,textvariable=s3).grid(row=3,column=1,sticky="ew")
+    Entry(f1,width=20,textvariable=s5).grid(row=5,column=1,sticky="ew")
+    Entry(f1,width=20,textvariable=s6).grid(row=6,column=1,sticky="ew")
 
-    Entry(f2,width=20,textvariable=s7).grid(row=1,column=1)
-    Entry(f2,width=20,textvariable=s8).grid(row=2,column=1)
-    Entry(f2,width=20,textvariable=s9).grid(row=3,column=1)
-    Entry(f2,width=20,textvariable=s10).grid(row=4,column=1)
-    Entry(f2,width=20,textvariable=s11).grid(row=5,column=1)
+    Entry(f2,width=20,textvariable=s7).grid(row=1,column=1,sticky="ew")
+    Entry(f2,width=20,textvariable=s8).grid(row=2,column=1,sticky="ew")
+    Entry(f2,width=20,textvariable=s9).grid(row=3,column=1,sticky="ew")
+    Entry(f2,width=20,textvariable=s10).grid(row=4,column=1,sticky="ew")
+    Entry(f2,width=20,textvariable=s11).grid(row=5,column=1,sticky="ew")
 
-    Entry(f3,width=20,textvariable=s12).grid(row=1,column=1)
-    Entry(f3,width=20,textvariable=s13).grid(row=2,column=1)
-    Entry(f3,width=20,textvariable=s14).grid(row=3,column=1)
-    Entry(f3,width=20,textvariable=s15).grid(row=4,column=1)
+    Entry(f3,width=20,textvariable=s12).grid(row=1,column=1,sticky="ew")
+    Entry(f3,width=20,textvariable=s13).grid(row=2,column=1,sticky="ew")
+    Entry(f3,width=20,textvariable=s14).grid(row=3,column=1,sticky="ew")
+    Entry(f3,width=20,textvariable=s15).grid(row=4,column=1,sticky="ew")
 
 
     #userinstruction
-    s6.set("yyyy-mm-dd")
-    s5.set("yyyy-mm-dd")
+    # s6.set("yyyy-mm-dd")
+    # s5.set("yyyy-mm-dd")
 
     def clr():
         s1.set("")
@@ -167,17 +180,30 @@ def AddStudent():
         s4.set("")
         s5.set("")
         s6.set("")
+        s7.set("")
+        s8.set("")
+        s9.set("")
+        s10.set("")
+        s11.set("")
+        s12.set("")
+        s13.set("")
+        s14.set("")
+        s15.set("")
     #sql connectivity
     def save():
         global var
+        global path
         global conn
-        quer="Insert into Student(Name, Class, Section, Gender,DOB,Admis_Date) values(%s,%s,%s,%s,%s,%s)"
-        var.execute(quer,(s1.get(),s2.get(),s3.get(),s4.get(),s5.get(),s6.get()))
+        print(path)
+        quer="Insert into Student(Name, Class, Section, Gender, DOB, DOA, Mother, MContact, Father, FContact, Email, Street, City, State, PIN, S_img) values(%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,LOAD_FILE(%s))"
+        var.execute(quer,(s1.get(),s2.get(),s3.get(),s4.get(),s5.get(),s6.get(),s7.get(),s8.get(),s9.get(),s10.get(),s11.get(),s12.get(),s13.get(),s14.get(),s15.get(),path))
         conn.commit()
         messagebox.showinfo("Info","Record submitted successfully")
         clr()
-    b1=Button(f1,text="Submit",command=save).grid(row=6,column=0,padx=10,pady=10)
-    b2=Button(f1,text="Clear",command=clr).grid(row=6,column=7,padx=10,pady=10)
+    Button(studentWindow,text="Submit",command=save).grid(row=6,column=0,padx=10,pady=10)
+    Button(studentWindow,text="Clear",command=clr).grid(row=6,column=7,padx=10,pady=10)
+    Button(studentWindow,text="close",command=studentWindow.destroy).grid(row=6,column=1,padx=10,pady=10)
+
     # Label(f1,text="Note : Date format is yyyy-mm-dd").grid(row=8,column=0,pady=10,padx=10)
 #defition of Teacher
 def Teacher():
